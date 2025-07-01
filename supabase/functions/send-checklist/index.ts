@@ -13,6 +13,301 @@ interface SubscriberData {
   gdprConsent: boolean
 }
 
+// Service d'email avec Resend
+class EmailService {
+  private resendApiKey: string
+
+  constructor() {
+    this.resendApiKey = Deno.env.get('RESEND_API_KEY') || ''
+    if (!this.resendApiKey) {
+      console.warn('RESEND_API_KEY non configurée - mode simulation')
+    }
+  }
+
+  async sendChecklistEmail(to: string, firstName: string): Promise<boolean> {
+    if (!this.resendApiKey) {
+      console.log(`[SIMULATION] Email envoyé à ${to}`)
+      return true
+    }
+
+    try {
+      const emailContent = this.generateEmailContent(firstName)
+      
+      const response = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${this.resendApiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from: 'Lhoman Group <noreply@lhomangroup.com>',
+          to: [to],
+          subject: '🎉 Votre Checklist du Voyageur Malin - Abidjan',
+          html: emailContent,
+        }),
+      })
+
+      if (!response.ok) {
+        const error = await response.text()
+        console.error('Erreur Resend:', error)
+        return false
+      }
+
+      const result = await response.json()
+      console.log('Email envoyé avec succès:', result.id)
+      return true
+
+    } catch (error) {
+      console.error('Erreur envoi email:', error)
+      return false
+    }
+  }
+
+  private generateEmailContent(firstName: string): string {
+    return `
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votre Checklist du Voyageur Malin</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; 
+            line-height: 1.6; 
+            color: #333; 
+            background-color: #f5f5f5;
+        }
+        .email-container { 
+            max-width: 600px; 
+            margin: 20px auto; 
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .header { 
+            background: linear-gradient(135deg, #ff1950, #e6174a); 
+            color: white; 
+            padding: 40px 30px; 
+            text-align: center; 
+        }
+        .header h1 { 
+            font-size: 28px; 
+            font-weight: 700; 
+            margin-bottom: 8px; 
+        }
+        .header p { 
+            font-size: 16px; 
+            opacity: 0.9; 
+        }
+        .content { 
+            padding: 40px 30px; 
+        }
+        .greeting { 
+            font-size: 18px; 
+            margin-bottom: 20px; 
+            color: #2d3748; 
+        }
+        .intro { 
+            margin-bottom: 30px; 
+            color: #4a5568; 
+            font-size: 16px; 
+        }
+        .checklist-section { 
+            margin: 30px 0; 
+        }
+        .checklist-item { 
+            background: #f8fafc; 
+            margin: 20px 0; 
+            padding: 25px; 
+            border-left: 5px solid #ff1950; 
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .checklist-item h3 { 
+            color: #2d3748; 
+            font-size: 18px; 
+            margin-bottom: 15px; 
+            font-weight: 600; 
+        }
+        .checklist-item ul { 
+            list-style: none; 
+            padding-left: 0; 
+        }
+        .checklist-item li { 
+            margin: 8px 0; 
+            padding-left: 25px; 
+            position: relative; 
+            color: #4a5568; 
+        }
+        .checklist-item li:before { 
+            content: "✓"; 
+            position: absolute; 
+            left: 0; 
+            color: #ff1950; 
+            font-weight: bold; 
+        }
+        .pro-tip { 
+            background: linear-gradient(135deg, #667eea, #764ba2); 
+            color: white; 
+            padding: 25px; 
+            border-radius: 8px; 
+            margin: 30px 0; 
+            text-align: center; 
+        }
+        .pro-tip strong { 
+            display: block; 
+            font-size: 18px; 
+            margin-bottom: 10px; 
+        }
+        .cta-button { 
+            display: inline-block; 
+            background: #ff1950; 
+            color: white; 
+            padding: 15px 30px; 
+            text-decoration: none; 
+            border-radius: 8px; 
+            margin: 25px 0; 
+            font-weight: 600; 
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+        .cta-button:hover { 
+            background: #e6174a; 
+        }
+        .footer { 
+            background: #2d3748; 
+            color: #a0aec0; 
+            text-align: center; 
+            padding: 30px; 
+            font-size: 14px; 
+        }
+        .footer p { 
+            margin: 5px 0; 
+        }
+        .footer a { 
+            color: #ff1950; 
+            text-decoration: none; 
+        }
+        @media (max-width: 600px) {
+            .email-container { margin: 10px; }
+            .header, .content { padding: 25px 20px; }
+            .checklist-item { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <h1>🎉 Votre Checklist du Voyageur Malin</h1>
+            <p>Économies & Confort à Abidjan</p>
+        </div>
+        
+        <div class="content">
+            <div class="greeting">
+                Bonjour ${firstName} ! 👋
+            </div>
+            
+            <div class="intro">
+                Merci de votre confiance ! Voici votre guide complet pour transformer vos séjours à Abidjan en expériences inoubliables, confortables et économiques.
+            </div>
+            
+            <div class="checklist-section">
+                <div class="checklist-item">
+                    <h3>🎯 Étape 1 : Définir votre stratégie (10 minutes)</h3>
+                    <ul>
+                        <li>Budget maximal par nuit : _____ FCFA</li>
+                        <li>Mes 3 impératifs : sécurité, cuisine, calme</li>
+                        <li>Mes 3 envies : jardin, proximité, immersion locale</li>
+                        <li>Durée du séjour : _____ jours</li>
+                    </ul>
+                </div>
+                
+                <div class="checklist-item">
+                    <h3>🔍 Étape 2 : Recherche stratégique (30 minutes)</h3>
+                    <ul>
+                        <li>Ouvrir Airbnb et filtrer par "chambre privée"</li>
+                        <li>Rechercher "Abidjan, Cocody Angré" comme destination</li>
+                        <li>Vérifier l'accès complet aux espaces communs</li>
+                        <li>Comparer avec les tarifs d'hôtels équivalents</li>
+                        <li>Lire attentivement les 5 derniers avis</li>
+                    </ul>
+                </div>
+                
+                <div class="checklist-item">
+                    <h3>🏠 Étape 3 : Critères de sélection incontournables</h3>
+                    <ul>
+                        <li>Cuisine entièrement équipée et accessible 24h/24</li>
+                        <li>Salon spacieux avec espace de travail</li>
+                        <li>Gardien ou système de sécurité permanent</li>
+                        <li>Service de ménage inclus (fréquence à vérifier)</li>
+                        <li>Quartier sécurisé (Cocody Angré recommandé)</li>
+                        <li>Wi-Fi haut débit inclus</li>
+                    </ul>
+                </div>
+                
+                <div class="checklist-item">
+                    <h3>💬 Étape 4 : Questions à poser avant de réserver</h3>
+                    <ul>
+                        <li>Puis-je recevoir des invités dans les espaces communs ?</li>
+                        <li>Y a-t-il des frais cachés (électricité, eau, ménage) ?</li>
+                        <li>Quelle est la politique d'annulation ?</li>
+                        <li>Les transports publics sont-ils accessibles ?</li>
+                        <li>Y a-t-il un supermarché à proximité ?</li>
+                    </ul>
+                </div>
+                
+                <div class="checklist-item">
+                    <h3>🛡️ Étape 5 : Sécuriser votre réservation</h3>
+                    <ul>
+                        <li>Vérifier l'identité du propriétaire (profil vérifié)</li>
+                        <li>Demander des photos récentes des espaces</li>
+                        <li>Confirmer les modalités d'arrivée et de départ</li>
+                        <li>Sauvegarder les contacts d'urgence</li>
+                        <li>Prendre une assurance voyage si nécessaire</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pro-tip">
+                <strong>💡 Astuce Pro Exclusive :</strong>
+                Pour des séjours de plus de 7 jours, contactez directement le propriétaire via la messagerie de la plateforme pour négocier un tarif dégressif. Vous pouvez économiser jusqu'à 20% !
+            </div>
+            
+            <div style="text-align: center;">
+                <a href="https://www.lhomangroup.com" class="cta-button">
+                    🏡 Découvrir nos offres exclusives
+                </a>
+            </div>
+            
+            <div style="margin-top: 30px; padding: 20px; background: #f0fff4; border-radius: 8px; border-left: 4px solid #38a169;">
+                <p style="color: #2f855a; font-weight: 600; margin-bottom: 10px;">🌟 Bonus : Votre première réservation</p>
+                <p style="color: #2f855a;">Appliquez cette checklist dès maintenant et partagez votre expérience avec nous ! Nous serions ravis de connaître vos économies réalisées.</p>
+            </div>
+            
+            <div style="margin-top: 30px; text-align: center; color: #4a5568;">
+                <p>Bon voyage et profitez bien de votre séjour malin à Abidjan ! 🌍✈️</p>
+                <p style="margin-top: 15px; font-style: italic;">L'équipe Lhoman Group</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>© 2025 Lhoman Group. Tous droits réservés.</strong></p>
+            <p style="margin-top: 15px;">Vous recevez cet email car vous avez demandé notre checklist gratuite sur notre site web.</p>
+            <p style="margin-top: 10px;">
+                <a href="mailto:contact@lhomangroup.com">Nous contacter</a> | 
+                <a href="https://www.lhomangroup.com/privacy">Politique de confidentialité</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+    `
+  }
+}
+
 Deno.serve(async (req: Request) => {
   // Gérer les requêtes OPTIONS pour CORS
   if (req.method === 'OPTIONS') {
@@ -20,11 +315,12 @@ Deno.serve(async (req: Request) => {
   }
 
   try {
-    // Initialiser le client Supabase
+    // Initialiser les services
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     
     const supabase = createClient(supabaseUrl, supabaseServiceKey)
+    const emailService = new EmailService()
 
     // Récupérer les données du formulaire
     const { firstName, lastName, email, gdprConsent }: SubscriberData = await req.json()
@@ -101,94 +397,20 @@ Deno.serve(async (req: Request) => {
       )
     }
 
-    // Préparer le contenu de l'email
-    const emailContent = `
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Votre Checklist du Voyageur Malin</title>
-    <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #ff1950, #e6174a); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
-        .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
-        .checklist-item { background: white; margin: 15px 0; padding: 15px; border-left: 4px solid #ff1950; border-radius: 5px; }
-        .footer { text-align: center; margin-top: 30px; color: #666; font-size: 14px; }
-        .button { display: inline-block; background: #ff1950; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; margin: 20px 0; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>🎉 Votre Checklist du Voyageur Malin</h1>
-            <p>Économies & Confort à Abidjan</p>
-        </div>
-        
-        <div class="content">
-            <h2>Bonjour ${firstName} !</h2>
-            
-            <p>Merci de votre intérêt pour notre checklist ! Voici votre guide complet pour un séjour malin à Abidjan :</p>
-            
-            <div class="checklist-item">
-                <h3>✅ Étape 1 : Définir votre budget et vos priorités</h3>
-                <ul>
-                    <li>Budget maximal par nuit : _____ FCFA</li>
-                    <li>3 impératifs : sécurité, cuisine, calme</li>
-                    <li>3 envies : jardin, proximité, immersion</li>
-                </ul>
-            </div>
-            
-            <div class="checklist-item">
-                <h3>🔍 Étape 2 : Recherche stratégique</h3>
-                <ul>
-                    <li>Filtrer par "chambre privée" sur Airbnb</li>
-                    <li>Chercher "Abidjan, Cocody Angré"</li>
-                    <li>Vérifier l'accès aux espaces communs</li>
-                    <li>Comparer avec les prix d'hôtels</li>
-                </ul>
-            </div>
-            
-            <div class="checklist-item">
-                <h3>🏠 Étape 3 : Critères de sélection</h3>
-                <ul>
-                    <li>Cuisine entièrement équipée accessible</li>
-                    <li>Salon spacieux et espaces de détente</li>
-                    <li>Gardien ou système de sécurité 24h/24</li>
-                    <li>Service de ménage régulier inclus</li>
-                    <li>Quartier sécurisé (ex: Cocody Angré)</li>
-                </ul>
-            </div>
-            
-            <div class="checklist-item">
-                <h3>💡 Bonus : Questions à poser avant de réserver</h3>
-                <ul>
-                    <li>Puis-je recevoir des invités ?</li>
-                    <li>Y a-t-il des frais cachés ?</li>
-                    <li>Le Wi-Fi est-il inclus et performant ?</li>
-                    <li>Quels sont les moyens de transport à proximité ?</li>
-                </ul>
-            </div>
-            
-            <p><strong>Astuce Pro :</strong> Contactez directement le propriétaire pour négocier les tarifs pour des séjours de plus de 7 jours !</p>
-            
-            <a href="https://www.lhomangroup.com" class="button">Découvrir nos offres exclusives</a>
-            
-            <p>Bon voyage et profitez bien de votre séjour malin à Abidjan ! 🌍</p>
-        </div>
-        
-        <div class="footer">
-            <p>© 2025 Lhoman Group. Tous droits réservés.</p>
-            <p>Vous recevez cet email car vous avez demandé notre checklist gratuite.</p>
-        </div>
-    </div>
-</body>
-</html>
-    `
+    // Envoyer l'email
+    const emailSent = await emailService.sendChecklistEmail(email, firstName)
+    
+    if (!emailSent) {
+      return new Response(
+        JSON.stringify({ error: 'Erreur lors de l\'envoi de l\'email' }),
+        { 
+          status: 500, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      )
+    }
 
-    // Envoyer l'email (simulation - dans un vrai projet, vous utiliseriez un service comme SendGrid, Resend, etc.)
-    // Pour cette démo, nous marquons simplement l'email comme envoyé
+    // Marquer l'email comme envoyé
     const { error: updateError } = await supabase
       .from('subscribers')
       .update({ checklist_sent: true })
@@ -198,12 +420,9 @@ Deno.serve(async (req: Request) => {
       console.error('Erreur mise à jour:', updateError)
     }
 
-    // Dans un environnement de production, vous intégreriez ici un service d'email
-    // comme SendGrid, Resend, ou AWS SES pour envoyer réellement l'email
-    
     return new Response(
       JSON.stringify({ 
-        message: 'Checklist envoyée avec succès ! Vérifiez votre boîte email.',
+        message: 'Checklist envoyée avec succès ! Vérifiez votre boîte email (et vos spams).',
         subscriber_id: subscriber.id
       }),
       { 
