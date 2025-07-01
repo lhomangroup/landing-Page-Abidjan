@@ -1,0 +1,438 @@
+/* Universal Box-Sizing & Base Styles */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+:root {
+    /* Vos couleurs définies */
+    --primary-color: #ff1950; /* Rouge/rose vibrant */
+    --background-color: #080808; /* Noir très foncé */
+    --text-color: #ffffff; /* Blanc */
+    --light-grey: #a0a0a0; /* Gris clair pour les textes secondaires */
+    --form-bg: #1a1a1a; /* Fond légèrement plus clair pour les cartes */
+
+    /* Variables de design Apple-like */
+    --border-radius: 8px;
+    --padding-section: 60px;
+    --max-width: 800px;
+}
+
+body {
+    /* Police Apple-like : système par défaut, sinon des alternatives */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased; /* Lissage des polices pour un rendu plus net */
+    -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding: 80px 20px 40px;
+    background: linear-gradient(180deg, var(--background-color) 0%, rgba(8, 8, 8, 0.8) 100%);
+}
+
+header h1 {
+    font-size: 3.2em;
+    margin-bottom: 10px;
+    line-height: 1.1;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+header h2 {
+    font-size: 1.8em;
+    font-weight: 400;
+    color: var(--light-grey);
+    margin-top: 0;
+}
+
+/* General Section Styling */
+section {
+    padding: var(--padding-section) 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08); /* Séparateur subtil */
+}
+
+section:last-of-type {
+    border-bottom: none; /* Pas de ligne à la dernière section */
+}
+
+h2 {
+    font-size: 2.5em;
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+h3 {
+    font-size: 1.8em;
+    margin-top: 40px;
+    margin-bottom: 15px;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+h4 {
+    font-size: 1.3em;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+p {
+    margin-bottom: 1em;
+}
+
+strong {
+    color: var(--primary-color);
+}
+
+.intro-section p {
+    font-size: 1.1em;
+    line-height: 1.8;
+    text-align: center;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--light-grey);
+}
+
+/* Problèmes, Solutions, Anecdotes */
+.problem-solution-block {
+    background-color: var(--form-bg); /* Fond légèrement plus foncé */
+    border-radius: var(--border-radius);
+    padding: 30px;
+    margin-bottom: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.05); /* Bordure subtile */
+}
+
+.problem, .solution, .anecdote {
+    margin-bottom: 1.2em;
+}
+
+.problem strong { color: #f06a6a; } /* Rouge pour les problèmes */
+.solution strong { color: #82e071; } /* Vert pour les solutions */
+
+/* Checklists d'Action */
+.checklist-actions ul {
+    list-style: none;
+    padding: 0;
+}
+
+.checklist-actions li {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start; /* Aligne le texte avec le haut de la checkbox */
+}
+
+.checklist-actions input[type="checkbox"] {
+    appearance: none; /* Cache la checkbox par défaut */
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--light-grey);
+    border-radius: 4px;
+    margin-right: 10px;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0; /* Empêche la checkbox de rétrécir */
+    top: 2px; /* Ajustement vertical léger */
+}
+
+.checklist-actions input[type="checkbox"]:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.checklist-actions input[type="checkbox"]:checked::after {
+    content: '✔'; /* Coche personnalisée */
+    color: var(--text-color);
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.checklist-actions label {
+    cursor: pointer;
+    display: flex; /* Pour aligner checkbox et texte */
+    align-items: flex-start;
+    transition: text-decoration 0.3s ease, opacity 0.3s ease; /* Transition pour l'effet de "cochage" */
+}
+
+/* Mini-programme */
+.mini-program {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.mini-program .step {
+    background-color: var(--form-bg);
+    border-radius: var(--border-radius);
+    padding: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.mini-program .step h4 {
+    margin-top: 0;
+    color: var(--primary-color);
+}
+
+.mini-program .step ul {
+    list-style: disc;
+    padding-left: 20px;
+}
+
+/* Section Conclusion et Formulaire */
+.conclusion-form-section {
+    display: flex;
+    flex-wrap: wrap; /* Permet le retour à la ligne sur petits écrans */
+    gap: 40px;
+    padding: var(--padding-section) 0;
+    align-items: center; /* Aligne les éléments verticalement */
+}
+
+.conclusion {
+    flex: 2; /* Prend plus d'espace */
+    min-width: 300px; /* Largeur minimale avant le retour à la ligne */
+}
+
+.conclusion h2 {
+    text-align: left; /* Alignement à gauche dans ce contexte */
+    margin-bottom: 20px;
+}
+
+.conclusion p {
+    color: var(--light-grey);
+    font-size: 1.1em;
+    line-height: 1.7;
+}
+
+.form-container {
+    flex: 1; /* Prend l'espace restant */
+    min-width: 300px; /* Largeur minimale avant le retour à la ligne */
+    background-color: var(--form-bg);
+    padding: 35px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Ombre subtile */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.form-container h3 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.6em;
+    color: var(--text-color);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--light-grey);
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.05); /* Fond très légèrement transparent */
+    color: var(--text-color);
+    font-size: 1em;
+    outline: none;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus {
+    border-color: var(--primary-color);
+    background-color: rgba(255, 25, 80, 0.1); /* Couleur principale légère au focus */
+}
+
+/* Consentement RGPD */
+.gdpr-consent {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 25px;
+}
+
+.gdpr-consent input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--light-grey);
+    border-radius: 4px;
+    margin-right: 10px;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    top: 2px;
+}
+
+.gdpr-consent input[type="checkbox"]:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.gdpr-consent input[type="checkbox"]:checked::after {
+    content: '✔';
+    color: var(--text-color);
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.gdpr-consent label {
+    font-size: 0.9em;
+    color: var(--light-grey);
+    cursor: pointer;
+}
+
+.form-message {
+    color: var(--primary-color); /* Couleur pour les messages d'erreur/succès */
+    text-align: center;
+    margin-top: -15px; /* Rapproche le message du bouton */
+    margin-bottom: 15px;
+    font-size: 0.9em;
+    height: 1.2em; /* Réserve de l'espace pour éviter les sauts de mise en page */
+}
+
+/* Bouton de soumission */
+button[type="submit"] {
+    width: 100%;
+    padding: 15px 25px;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transitions douces */
+    box-shadow: 0 4px 15px rgba(255, 25, 80, 0.4); /* Ombre subtile */
+}
+
+button[type="submit"]:hover {
+    background-color: #e6174a; /* Rose légèrement plus foncé au survol */
+    transform: translateY(-2px); /* Léger mouvement vers le haut */
+}
+
+button[type="submit"]:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(255, 25, 80, 0.4); /* Ombre réduite au clic */
+}
+
+.small-text {
+    font-size: 0.85em;
+    color: var(--light-grey);
+    text-align: center;
+    margin-top: 25px;
+    line-height: 1.4;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 0.9em;
+    color: var(--light-grey);
+    border-top: 1px solid rgba(255, 255, 255, 0.08); /* Ligne de séparation */
+    margin-top: 40px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.5em;
+    }
+
+    header h2 {
+        font-size: 1.4em;
+    }
+
+    h2 {
+        font-size: 2em;
+    }
+
+    h3 {
+        font-size: 1.5em;
+    }
+
+    .intro-section p {
+        font-size: 1em;
+    }
+
+    .problem-solution-block {
+        padding: 20px;
+    }
+
+    .checklist-actions label {
+        font-size: 0.95em;
+    }
+
+    .conclusion-form-section {
+        flex-direction: column; /* Empile les colonnes sur petits écrans */
+        gap: 30px;
+    }
+
+    .conclusion, .form-container {
+        min-width: unset; /* Supprime la largeur minimale pour permettre l'empilement */
+        width: 100%; /* Prend toute la largeur disponible */
+    }
+
+    .form-container {
+        padding: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 60px 15px 30px;
+    }
+    header h1 {
+        font-size: 2em;
+    }
+    header h2 {
+        font-size: 1.2em;
+    }
+    main {
+        padding: 0 15px;
+    }
+    section {
+        padding: 40px 0;
+    }
+    h2 {
+        font-size: 1.8em;
+    }
+    h3 {
+        font-size: 1.3em;
+    }
+    .form-group input, button {
+        padding: 10px 15px;
+        font-size: 1em;
+    }
+}
