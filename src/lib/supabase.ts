@@ -3,11 +3,11 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
-// Use placeholder values if environment variables are not properly configured
+// Use valid placeholder values if environment variables are not properly configured
 const defaultUrl = 'https://placeholder.supabase.co'
-const defaultKey = 'placeholder_anon_key'
+const defaultKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsYWNlaG9sZGVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDUxOTI4MDAsImV4cCI6MTk2MDc2ODgwMH0.placeholder'
 
-const finalUrl = supabaseUrl && supabaseUrl !== 'your_supabase_project_url' ? supabaseUrl : defaultUrl
+const finalUrl = supabaseUrl && supabaseUrl !== 'https://your-project.supabase.co' ? supabaseUrl : defaultUrl
 const finalKey = supabaseAnonKey && supabaseAnonKey !== 'your_supabase_anon_key' ? supabaseAnonKey : defaultKey
 
 export const supabase = createClient(finalUrl, finalKey)
