@@ -310,7 +310,7 @@ function App() {
         {/* Conclusion and Form */}
         <section className="py-16">
           <div className="flex flex-col lg:flex-row gap-12 items-center">
-            <div className="w-full">
+            <div className="w-full lg:w-1/2">
               <h2 className="text-3xl md:text-4xl font-semibold mb-6 text-left">
                 Votre Prochain Séjour à Abidjan Ne Sera Plus Jamais Pareil !
               </h2>
@@ -335,6 +335,106 @@ function App() {
                     cliquez ici
                   </a>
                 </p>
+              </div>
+            </div>
+
+            {/* Form */}
+            <div className="w-full lg:w-1/2">
+              <div className="bg-gray-800 rounded-lg p-8 border border-gray-700">
+                <h3 className="text-2xl font-semibold mb-6 text-center">
+                  Téléchargez votre Checklist Gratuite !
+                </h3>
+                
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <label htmlFor="firstName" className="block text-sm font-medium mb-2">
+                      Prénom
+                    </label>
+                    <input
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-colors"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="lastName" className="block text-sm font-medium mb-2">
+                      Nom
+                    </label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-colors"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium mb-2">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-colors"
+                      required
+                    />
+                  </div>
+
+                  <div className="flex items-start">
+                    <input
+                      type="checkbox"
+                      id="gdprConsent"
+                      name="gdprConsent"
+                      checked={formData.gdprConsent}
+                      onChange={handleInputChange}
+                      className="mt-1 mr-3 w-4 h-4 text-red-500 bg-gray-700 border-gray-600 rounded focus:ring-red-500"
+                      required
+                    />
+                    <label htmlFor="gdprConsent" className="text-sm text-gray-300">
+                      J'accepte de recevoir des communications concernant des astuces de voyage et des offres spéciales.
+                    </label>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="w-full bg-red-500 hover:bg-red-600 disabled:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center"
+                  >
+                    {isLoading ? (
+                      <>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                        Envoi en cours...
+                      </>
+                    ) : (
+                      <>
+                        <Mail className="w-5 h-5 mr-2" />
+                        Recevoir Ma Checklist
+                      </>
+                    )}
+                  </button>
+
+                  {formMessage && (
+                    <div className={`p-4 rounded-lg text-center ${
+                      isSuccess 
+                        ? 'bg-green-900/50 border border-green-700 text-green-300' 
+                        : 'bg-red-900/50 border border-red-700 text-red-300'
+                    }`}>
+                      {isSuccess && <CheckCheck className="w-5 h-5 inline mr-2" />}
+                      {formMessage}
+                    </div>
+                  )}
+                </form>
               </div>
             </div>
           </div>
