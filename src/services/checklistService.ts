@@ -15,8 +15,8 @@ export class ChecklistService {
       const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
       
       if (!supabaseUrl || !supabaseAnonKey || 
-          supabaseUrl === 'your_supabase_project_url' || 
-          supabaseAnonKey === 'your_supabase_anon_key') {
+          supabaseUrl === 'https://placeholder.supabase.co' || 
+          supabaseAnonKey === 'placeholder_anon_key') {
         // Mode fallback : simuler un succès pour permettre la redirection
         console.log('Mode fallback activé - variables Supabase non configurées')
         return {
