@@ -460,6 +460,21 @@ function App() {
             </div>
           </div>
         </section>
+
+        {/* Call to Action Final */}
+        <section className="py-12 text-center border-t border-gray-800">
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
+            Pour découvrir concrètement comment nous incarnons cette philosophie, et peut-être trouver votre prochain chez-vous loin de chez vous, 
+            <a 
+              href="https://www.lhomangroup.com" 
+              className="text-red-500 hover:text-red-400 font-medium underline decoration-red-500/30 hover:decoration-red-400 transition-colors duration-200 ml-1"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              cliquez ici
+            </a>
+          </p>
+        </section>
       </main>
 
       {/* Footer */}
