@@ -58,6 +58,11 @@ function App() {
       setFormMessage(result.message || 'Offre envoyée avec succès ! Vérifiez votre boîte email.');
       setIsSuccess(true);
       
+      // Redirection vers Airbnb après succès
+      setTimeout(() => {
+        window.open('https://www.airbnb.fr/rooms/1332547076565104721?check_in=2025-01-24&check_out=2025-01-25&guests=1&adults=1&s=67&unique_share_id=eab73e9f-17f6-4abc-8f31-90d38ce3b723', '_blank');
+      }, 2000);
+
       // Réinitialiser le formulaire après succès
       setFormData({
         firstName: '',
