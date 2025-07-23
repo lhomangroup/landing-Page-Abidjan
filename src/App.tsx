@@ -310,7 +310,7 @@ function App() {
         {/* Conclusion and Form */}
         <section className="py-16">
           <div className="flex flex-col lg:flex-row gap-12 items-center">
-            <div className="lg:flex-[2] min-w-0">
+            <div className="w-full">
               <h2 className="text-3xl md:text-4xl font-semibold mb-6 text-left">
                 Votre Prochain Séjour à Abidjan Ne Sera Plus Jamais Pareil !
               </h2>
@@ -335,134 +335,6 @@ function App() {
                     cliquez ici
                   </a>
                 </p>
-              </div>
-            </div>
-
-            <div className="lg:flex-1 w-full max-w-md">
-              <div className="bg-gray-800 p-8 rounded-lg shadow-2xl border border-gray-700">
-                {isSuccess ? (
-                  <div className="text-center space-y-6">
-                    <div className="flex justify-center">
-                      <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center">
-                        <CheckCheck className="w-8 h-8 text-white" />
-                      </div>
-                    </div>
-                    <h3 className="text-2xl font-medium text-green-400">
-                      Checklist envoyée !
-                    </h3>
-                    <p className="text-gray-300">
-                      Vérifiez votre boîte email (et vos spams) pour recevoir votre checklist complète.
-                    </p>
-                    <div className="flex items-center justify-center space-x-2 text-sm text-gray-400">
-                      <Mail className="w-4 h-4" />
-                      <span>Email envoyé à {formData.email}</span>
-                    </div>
-                  </div>
-                ) : (
-                  <>
-                    <h3 className="text-2xl font-medium text-center mb-8">
-                      Téléchargez votre Checklist Gratuite !
-                    </h3>
-                    
-                    <form onSubmit={handleSubmit} className="space-y-5">
-                      <div>
-                        <label htmlFor="firstName" className="block mb-2 font-medium text-gray-300">
-                          Prénom
-                        </label>
-                        <input
-                          type="text"
-                          id="firstName"
-                          name="firstName"
-                          value={formData.firstName}
-                          onChange={handleInputChange}
-                          required
-                          disabled={isLoading}
-                          className="w-full px-4 py-3 border border-gray-600 rounded-md bg-gray-700 text-white focus:border-red-500 focus:bg-red-900/10 outline-none transition-all duration-200 disabled:opacity-50"
-                        />
-                      </div>
-                      
-                      <div>
-                        <label htmlFor="lastName" className="block mb-2 font-medium text-gray-300">
-                          Nom
-                        </label>
-                        <input
-                          type="text"
-                          id="lastName"
-                          name="lastName"
-                          value={formData.lastName}
-                          onChange={handleInputChange}
-                          required
-                          disabled={isLoading}
-                          className="w-full px-4 py-3 border border-gray-600 rounded-md bg-gray-700 text-white focus:border-red-500 focus:bg-red-900/10 outline-none transition-all duration-200 disabled:opacity-50"
-                        />
-                      </div>
-                      
-                      <div>
-                        <label htmlFor="email" className="block mb-2 font-medium text-gray-300">
-                          Email
-                        </label>
-                        <input
-                          type="email"
-                          id="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleInputChange}
-                          required
-                          disabled={isLoading}
-                          className="w-full px-4 py-3 border border-gray-600 rounded-md bg-gray-700 text-white focus:border-red-500 focus:bg-red-900/10 outline-none transition-all duration-200 disabled:opacity-50"
-                        />
-                      </div>
-                      
-                      <div className="flex items-start space-x-3">
-                        <div className="relative flex-shrink-0 mt-1">
-                          <input
-                            type="checkbox"
-                            id="gdprConsent"
-                            name="gdprConsent"
-                            checked={formData.gdprConsent}
-                            onChange={handleInputChange}
-                            required
-                            disabled={isLoading}
-                            className="sr-only"
-                          />
-                          <div 
-                            className={`w-5 h-5 border-2 rounded border-gray-400 cursor-pointer transition-all duration-300 ${
-                              formData.gdprConsent 
-                                ? 'bg-red-500 border-red-500' 
-                                : 'hover:border-red-400'
-                            } ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`} 
-                            onClick={() => !isLoading && setFormData(prev => ({ ...prev, gdprConsent: !prev.gdprConsent }))}
-                          >
-                            {formData.gdprConsent && (
-                              <CheckCircle className="w-3 h-3 text-white absolute top-0.5 left-0.5" />
-                            )}
-                          </div>
-                        </div>
-                        <label htmlFor="gdprConsent" className="text-sm text-gray-300 cursor-pointer">
-                          J'accepte de recevoir des communications concernant des astuces de voyage et des offres spéciales.
-                        </label>
-                      </div>
-                      
-                      {formMessage && (
-                        <p className={`text-center text-sm ${
-                          formMessage.includes('succès') || formMessage.includes('envoyée') 
-                            ? 'text-green-400' 
-                            : 'text-red-400'
-                        }`}>
-                          {formMessage}
-                        </p>
-                      )}
-                      
-                      <button
-                        type="submit"
-                        disabled={isLoading}
-                        className="w-full py-4 px-6 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 active:transform active:translate-y-0 transform hover:-translate-y-0.5 transition-all duration-200 shadow-lg hover:shadow-red-500/40 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-                      >
-                        {isLoading ? 'Envoi en cours...' : 'Recevoir Ma Checklist'}
-                      </button>
-                    </form>
-                  </>
-                )}
               </div>
             </div>
           </div>
