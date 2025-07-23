@@ -463,10 +463,6 @@ function App() {
                     </form>
                   </>
                 )}
-                
-                <p className="text-sm text-gray-400 text-center mt-6 leading-relaxed">
-                  P.S. : Vous avez aimé cette checklist ? Inscrivez-vous à notre newsletter exclusive pour recevoir d'autres astuces de voyage, des bons plans sur Abidjan et des offres spéciales pour vos futurs séjours !
-                </p>
               </div>
             </div>
           </div>
