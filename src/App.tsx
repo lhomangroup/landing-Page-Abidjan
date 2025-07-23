@@ -327,7 +327,7 @@ function App() {
                 <p className="text-lg leading-relaxed">
                   Pour découvrir concrètement comment nous incarnons cette philosophie, et peut-être trouver votre prochain chez-vous loin de chez vous, 
                   <a 
-                    href="https://www.lhomangroup.com" 
+                    href="https://www.airbnb.fr/rooms/1332547076565104721?check_in=2025-01-24&check_out=2025-01-25&guests=1&adults=1&s=67&unique_share_id=84ce7147-f7d5-4033-a36e-0a04dafd224e" 
                     className="text-red-500 hover:text-red-400 font-medium underline decoration-red-500/30 hover:decoration-red-400 transition-colors duration-200 ml-1"
                     target="_blank"
                     rel="noopener noreferrer"
