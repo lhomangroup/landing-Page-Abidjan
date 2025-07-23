@@ -402,7 +402,7 @@ function App() {
                       required
                     />
                     <label htmlFor="gdprConsent" className="text-sm text-gray-300">
-                      J'accepte de recevoir des communications concernant des astuces de voyage et des offres spéciales.
+                      J'accepte de recevoir des communications concernant des offres spéciales.
                     </label>
                   </div>
 
