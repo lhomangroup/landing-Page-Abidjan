@@ -342,7 +342,7 @@ function App() {
             <div className="w-full lg:w-1/2">
               <div className="bg-gray-800 rounded-lg p-8 border border-gray-700">
                 <h3 className="text-2xl font-semibold mb-6 text-center">
-                  Téléchargez votre Checklist Gratuite !
+                  Pour découvrir concrètement comment nous incarnons cette philosophie, et trouver votre prochain chez-vous loin de chez vous, remplissez le formulaire vous serez redirigé vers notre offre
                 </h3>
                 
                 <form onSubmit={handleSubmit} className="space-y-6">
