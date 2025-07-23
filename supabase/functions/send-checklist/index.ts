@@ -39,7 +39,7 @@ class EmailService {
         body: JSON.stringify({
           from: 'Lhoman Group <noreply@lhomangroup.com>',
           to: [to],
-          subject: '🎉 Votre Checklist du Voyageur Malin - Abidjan',
+          subject: '🎉 Votre Offre du Voyageur Malin - Abidjan',
           html: emailContent,
         }),
       })
@@ -74,7 +74,7 @@ class EmailService {
       console.log(`   Destinataire: ${to}`)
       console.log(`   Nom: ${firstName}`)
       console.log(`   Service: EmailJS Fallback`)
-      console.log(`   Contenu: Checklist du Voyageur Malin`)
+      console.log(`   Contenu: Offre du Voyageur Malin`)
       
       // Dans un environnement de production, vous pourriez utiliser:
       // - SendGrid
@@ -97,7 +97,7 @@ class EmailService {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Votre Checklist du Voyageur Malin</title>
+    <title>Votre Offre du Voyageur Malin</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
@@ -228,7 +228,7 @@ class EmailService {
 <body>
     <div class="email-container">
         <div class="header">
-            <h1>🎉 Votre Checklist du Voyageur Malin</h1>
+            <h1>🎉 Votre Offre du Voyageur Malin</h1>
             <p>Économies & Confort à Abidjan</p>
         </div>
         
@@ -238,7 +238,7 @@ class EmailService {
             </div>
             
             <div class="intro">
-                Merci de votre confiance ! Voici votre guide complet pour transformer vos séjours à Abidjan en expériences inoubliables, confortables et économiques.
+                Merci de votre confiance ! Voici votre offre complète pour transformer vos séjours à Abidjan en expériences inoubliables, confortables et économiques.
             </div>
             
             <div class="checklist-section">
@@ -311,7 +311,7 @@ class EmailService {
             
             <div style="margin-top: 30px; padding: 20px; background: #f0fff4; border-radius: 8px; border-left: 4px solid #38a169;">
                 <p style="color: #2f855a; font-weight: 600; margin-bottom: 10px;">🌟 Bonus : Votre première réservation</p>
-                <p style="color: #2f855a;">Appliquez cette checklist dès maintenant et partagez votre expérience avec nous ! Nous serions ravis de connaître vos économies réalisées.</p>
+                <p style="color: #2f855a;">Profitez de cette offre dès maintenant et partagez votre expérience avec nous ! Nous serions ravis de connaître vos économies réalisées.</p>
             </div>
             
             <div style="margin-top: 30px; text-align: center; color: #4a5568;">
@@ -322,7 +322,7 @@ class EmailService {
         
         <div class="footer">
             <p><strong>© 2025 Lhoman Group. Tous droits réservés.</strong></p>
-            <p style="margin-top: 15px;">Vous recevez cet email car vous avez demandé notre checklist gratuite sur notre site web.</p>
+            <p style="margin-top: 15px;">Vous recevez cet email car vous avez demandé notre offre gratuite sur notre site web.</p>
             <p style="margin-top: 10px;">
                 <a href="mailto:contact@lhomangroup.com">Nous contacter</a> | 
                 <a href="https://www.lhomangroup.com/privacy">Politique de confidentialité</a>
@@ -418,7 +418,7 @@ Deno.serve(async (req: Request) => {
     if (existingSubscriber && existingSubscriber.checklist_sent) {
       return new Response(
         JSON.stringify({ 
-          message: 'Vous avez déjà reçu la checklist à cette adresse email' 
+          message: 'Vous avez déjà reçu l\'offre à cette adresse email' 
         }),
         { 
           status: 200, 
@@ -480,7 +480,7 @@ Deno.serve(async (req: Request) => {
 
     return new Response(
       JSON.stringify({ 
-        message: 'Checklist envoyée avec succès ! Vérifiez votre boîte email (et vos spams).',
+        message: 'Offre envoyée avec succès ! Vérifiez votre boîte email (et vos spams).',
         subscriber_id: subscriber.id
       }),
       { 

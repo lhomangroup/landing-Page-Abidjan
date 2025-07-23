@@ -55,7 +55,7 @@ function App() {
       // Envoyer les données au backend
       const result = await ChecklistService.subscribeAndSendChecklist(formData);
       
-      setFormMessage(result.message || 'Checklist envoyée avec succès ! Vérifiez votre boîte email.');
+      setFormMessage(result.message || 'Offre envoyée avec succès ! Vérifiez votre boîte email.');
       setIsSuccess(true);
       
       // Réinitialiser le formulaire après succès
