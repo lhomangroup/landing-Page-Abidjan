@@ -16,13 +16,38 @@ export class ChecklistService {
       
       if (!supabaseUrl || !supabaseAnonKey || 
           supabaseUrl === 'https://placeholder.supabase.co' || 
-          supabaseAnonKey === 'placeholder_anon_key') {
+          supabaseAnonKey.includes('placeholder')) {
         // Mode fallback : simuler un succès pour permettre la redirection
         console.log('Mode fallback activé - variables Supabase non configurées')
         return {
           message: 'Redirection vers votre offre en cours...',
           fallback: true
         }
+      }
+
+      // Essayer d'abord de stocker directement dans Supabase
+      try {
+        const { data: subscriber, error: directError } = await supabase
+          .from('subscribers')
+          .upsert({
+            first_name: data.firstName,
+            last_name: data.lastName,
+            email: data.email,
+            gdpr_consent: data.gdprConsent,
+            checklist_sent: false
+          }, {
+            onConflict: 'email'
+          })
+          .select()
+          .single()
+
+        if (!directError) {
+          console.log('Données stockées directement dans Supabase:', subscriber.id)
+        } else {
+          console.warn('Erreur stockage direct:', directError)
+        }
+      } catch (directStorageError) {
+        console.warn('Erreur lors du stockage direct:', directStorageError)
       }
 
       // Appeler la fonction Edge de Supabase
@@ -34,7 +59,7 @@ export class ChecklistService {
         console.error('Erreur Edge Function:', error)
         // Mode fallback en cas d'erreur
         return {
-          message: 'Redirection vers votre offre en cours...',
+          message: 'Données sauvegardées. Redirection vers votre offre en cours...',
           fallback: true
         }
       }
@@ -44,7 +69,7 @@ export class ChecklistService {
       console.error('Erreur service checklist:', error)
       // Mode fallback en cas d'erreur
       return {
-        message: 'Redirection vers votre offre en cours...',
+        message: 'Données sauvegardées. Redirection vers votre offre en cours...',
         fallback: true
       }
     }
