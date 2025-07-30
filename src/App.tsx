@@ -349,7 +349,7 @@ function App() {
             {/* Form */}
             <div className="w-full lg:w-1/2">
               <div className="bg-gray-800 rounded-lg p-8 border border-gray-700">
-                <h3 className="text-lg font-medium mb-6 text-center">
+                <h3 className="text-xl font-medium mb-6 text-center">
                   Pour découvrir concrètement comment nous incarnons cette philosophie, et trouver votre prochain chez-vous loin de chez vous, remplissez le formulaire vous serez redirigé vers notre offre
                 </h3>
                 
